@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Fresh Glow Cleanser</title>
+<link rel="icon" href="image/cleanser.png" type="image/png">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+<style>
+    body {
+        font-family: 'Segoe UI', Arial, sans-serif;
+        background: linear-gradient(120deg, #f5f5f5 60%, #c472c4 100%);
+        margin: 0;
+        padding: 0;
+    }
+    .navbar-icons {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 20px;
+    background: #f0f4f7;
+    border-radius: 10px;
+    margin-bottom: 20px;
+  }
+
+  .navbar-icons i {
+    font-size: 24px;
+    color: #333;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin: 0 10px;
+  }
+
+  .navbar-icons i:hover,
+  .navbar-icons i.active {
+    color: #9500ff;
+    transform: scale(1.2);
+  }
+
+  .search-container {
+    position: relative;
+    width: 100%;
+    max-width: 800px;
+    margin: auto;
+    margin-bottom: 20px;
+  }
+
+  .search-container input {
+    width: 100%;
+    height: 45px;
+    padding-left: 40px;
+    border-radius: 25px;
+    border: 1px solid #ccc;
+    text-align: center;
+    font-size: 16px;
+  }
+
+  .search-container .mute-icon {
+    position: absolute;
+    left: 12px;
+    top: 10px;
+    font-size: 20px;
+    color: #888;
+    cursor: pointer;
+  }
+
+  .heart-btn {
+    position: absolute;
+    right: -50px;
+    top: 2px;
+  }
+
+  .btn-outline-danger i {
+    font-size: 20px;
+    transition: 0.3s;
+  }
+
+  .btn-outline-danger:hover i {
+    color: rgb(98, 0, 255);
+    transform: scale(1.3);
+  }
+    h1 {
+        text-align: center;
+        color: #7b0786;
+        margin-top: 30px;
+        letter-spacing: 2px;
+        font-size: 2.5em;
+        text-shadow: 1px 1px 8px #dce0c3;
+    }
+    .container {
+        display: flex;
+        gap: 30px;
+        flex-wrap: nowrap; 
+        overflow-x: auto;  
+        padding: 40px 20px 40px 20px;
+        justify-content: center;
+    }
+    .card {
+        border: 2px solid #880d96;
+        border-radius: 18px;
+        box-shadow: 0 4px 18px rgba(147, 99, 99, 0.15);
+        padding: 24px 18px 28px 18px;
+        width: 300px;
+        background: #fff;
+        text-align: center;
+        flex-shrink: 0;
+        transition: transform 0.2s, box-shadow 0.2s;
+        position: relative;
+    }
+    .card:hover {
+        transform: translateY(-8px) scale(1.03);
+        box-shadow: 0 8px 32px rgba(147, 99, 99, 0.25);
+        border-color: #9c0ea6;
+    }
+    .quantity-control {
+        margin: 14px 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+    }
+    .quantity-control button {
+        background: #8f099b;
+        color: #fff;
+        border: none;
+        border-radius: 50%;
+        width: 32px;
+        height: 32px;
+        font-size: 1.2em;
+        cursor: pointer;
+        transition: background 0.2s;
+    }
+    .quantity-control button:hover {
+        background: #881288;
+    }
+    .quantity-control input {
+        width: 36px;
+        text-align: center;
+        font-size: 1.1em;
+        border: 1px solid #de97d3;
+        border-radius: 6px;
+        background: #f9f6f6;
+        padding: 4px 0;
+    }
+    img {
+        width: 180px;
+        height: 180px;
+        object-fit: cover;
+        border-radius: 12px;
+        margin-bottom: 10px;
+        box-shadow: 0 2px 10px rgba(147, 99, 99, 0.08);
+        border: 1.5px solid #c394c7;
+    }
+    h3 {
+        color: #94368c;
+        margin-bottom: 8px;
+        font-size: 1.3em;
+        letter-spacing: 1px;
+    }
+    p {
+        color: #700869;
+        font-size: 1em;
+        margin-bottom: 10px;
+    }
+    h2 {
+        color: #793975;
+        font-size: 1.1em;
+        margin: 18px 0 8px 0;
+        letter-spacing: 1px;
+    }
+    ol {
+        text-align: left;
+        margin: 0 0 12px 0;
+        padding-left: 18px;
+        color: #50035c;
+        font-size: 0.98em;
+    }
+    .order-btn {
+        background: linear-gradient(90deg, #9d63a9 60%, #7f0683 100%);
+        color: #fff;
+        border: none;
+        border-radius: 8px;
+        padding: 10px 28px;
+        font-size: 1.1em;
+        cursor: pointer;
+        margin-top: 10px;
+        transition: background 0.2s, transform 0.2s;
+        box-shadow: 0 2px 8px rgba(146, 99, 147, 0.1);
+        letter-spacing: 1px;
+    }
+    .order-btn:hover {
+        background: linear-gradient(90deg, #87087c 60%, #dd78d1 100%);
+        transform: scale(1.05);
+    }
+    @media (max-width: 900px) {
+        .container {
+            flex-wrap: wrap;
+            justify-content: flex-start;
+            gap: 20px;
+        }
+        .card {
+            width: 90vw;
+            max-width: 340px;
+            margin: 0 auto;
+        }
+    }
+    @media (max-width: 600px) {
+        h1 {
+            font-size: 1.5em;
+        }
+        .container {
+            padding: 10px;
+            gap: 10px;
+        }
+        .card {
+            padding: 12px 6px 18px 6px;
+        }
+        img {
+            width: 120px;
+            height: 120px;
+        }
+    }
+
+    .container {
+      display: flex;
+      gap: 30px;
+      flex-wrap: nowrap;
+      overflow-x: auto;  
+    }
+    .card {
+      border: 2px solid #900f95;
+      padding: 20px;
+      width: 300px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+    .quantity-control {
+      margin: 10px 0;
+    }
+
+    img {
+        width: 180px;
+        height: 180px;
+        object-fit: cover;
+        border-radius: 12px;
+        margin-bottom: 10px;
+        box-shadow: 0 2px 10px rgba(147, 99, 99, 0.08);
+        border: 1.5px solid #ddc3e0;
+    
+        width: 180px;
+        height:180px ;
+    }
+    .card {
+  border: 2px solid #521b6c;
+  border-radius: 16px;
+  box-shadow: 0 6px 20px rgba(94, 27, 108, 0.3);
+}
+
+.card-title {
+  color: #3b0a45;
+  font-weight: bold;
+  font-size: 22px;
+  font-family: 'Garamond', serif;
+}
+
+.btn {
+  border-radius: 20px;
+  font-weight: 600;
+  background-color: #9b44ad;
+  border: none;
+  color: white;
+}
+
+.btn:hover {
+  background-color: #7f2d91;
+}
+body{
+   background: url('/mnt/data/6f4aeb1f-f09a-4a1b-9dec-b122f89077b1.png') center center/cover no-repeat fixed;
+  background-blend-mode: overlay;
+  background-color: rgba(252, 230, 255, 0.7); /* Pinkish royal tint */
+  font-family: 'Georgia', serif;
+   background: linear-gradient(135deg, #f8f0f2, #efc3fc, #d78efc);
+  background-size: 400% 400%;
+  animation: royalBG 15s ease infinite;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+@keyframes royalBG {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+  #thankMsg {
+    font-size: 1.2rem;
+    padding: 20px;
+    background-color: #e6ffe6;
+    border: 2px solid #28a745;
+    border-radius: 8px;
+  }
+  </style>
+</head>
+<body>
+<div class="navbar-icons">
+ 
+      <a href="project4.html" > <i class="bi bi-house-door-fill active" title="Home"></i></a>
+
+
+    <div class="d-flex">
+      <i class="bi bi-cart4" title="Cart"></i>
+      <i class="bi bi-gear-fill" title="Settings"></i>
+    </div>
+  </div>
+
+  <div class="search-container position-relative">
+    <i class="bi bi-mic-mute-fill mute-icon" title="Mute"></i>
+    <input type="text" placeholder="🔍 Search...">
+
+  </div>
+
+  <script>
+  const icons = document.querySelectorAll(".navbar-icons i");
+
+  icons.forEach(icon => {
+    icon.addEventListener("click", () => {
+      icons.forEach(i => i.classList.remove("active"));
+      icon.classList.add("active");
+    });
+  });
+</script>
+
+<div class="text-end">
+  <button class="btn btn-outline-danger" title="Liked the product❤️">
+    <i class="bi bi-heart-fill"></i>
+  </button>
+</div>
+
+  <h1>Fresh Glow Cleanser</h1>
+
+  <div class="container">
+
+    <div class="card">
+      <img src="image/fresh1.webp" alt="cleanser Product 1" width="150">
+      <h3>LUXE ORGANIX</h3>
+      <p>Creamy WHIP cleanser VITAMIN C GALACTOMYCES</p>
+      <p><strong>Size:</strong> 300ml</p>
+  <p><strong>Price:</strong> ₹599</p>
+      <div class="quantity-control">
+        <button onclick="decreaseQty(0)">-</button>
+        <input type="text" id="qty0" value="1" readonly>
+        <button onclick="increaseQty(0)">+</button>
+      </div>
+      <h2>Steps :</h2>      
+    <ol class="list-group list-group-numbered">
+  <li class="list-group-item">Gently removes dirt, oil, and makeup.</li>
+  <li class="list-group-item">Enriched with vitamin C for natural brightness.</li>
+  <li class="list-group-item">Leaves skin feeling soft and refreshed.</li>
+  <li class="list-group-item">Suitable for all skin types, including sensitive skin.</li>
+</ol>
+
+<button class="btn btn-success mt-3" data-bs-toggle="modal" data-bs-target="#orderModal">Order Now</button>
+</div>
+
+    <div class="card">
+      <img src="image/frash.2.webp" alt="Women's Product 2" width="150">
+      <h3>Hunter Cleanser</h3>
+      <p>Gentle cleanser made for sensitive skin.</p>
+      <p><strong>Size:</strong> 350 ml</p>
+  <p><strong>Price:</strong> ₹799</p>
+      <div class="quantity-control">
+        <button onclick="decreaseQty(1)">-</button>
+        <input type="text" id="qty1" value="1" readonly>
+        <button onclick="increaseQty(1)">+</button>
+      </div>
+      <h2>Steps :</h2>
+       <ol class="list-group list-group-numbered">
+  <li class="list-group-item">Deeply cleanses pores and removes impurities.</li>
+  <li class="list-group-item">Formulated with activated charcoal and green tea.</li>
+  <li class="list-group-item">Controls excess oil and prevents breakouts.</li>
+  <li class="list-group-item">Refreshes and revitalizes dull-looking skin.</li>
+</ol>
+   
+      <button class="btn btn-success mt-3" data-bs-toggle="modal" data-bs-target="#orderModal">Order Now</button>
+
+    </div>
+
+    
+    <div class="card">
+      <img src="image/frash3.webp" alt="Women's Product 3" width="150">
+      <h3>Hunter Moisturizer</h3>
+      <p>Keep your skin hydrated all day.</p>
+      <p><strong>Size:</strong> 450 ml</p>
+  <p><strong>Price:</strong> ₹899</p>
+      <div class="quantity-control">
+        <button onclick="decreaseQty(2)">-</button>
+        <input type="text" id="qty2" value="1" readonly>
+        <button onclick="increaseQty(2)">+</button>
+      </div>
+      <h2>Steps :</h2>
+     <ol class="list-group list-group-numbered">
+  <li class="list-group-item">Provides intense hydration for dry and rough skin.</li>
+  <li class="list-group-item">Enriched with natural oils and Vitamin E for nourishment.</li>
+  <li class="list-group-item">>Lightweight, non-greasy formula suitable for daily use.</li>
+  <li class="list-group-item">Improves skin texture and gives a healthy, radiant look.</li>
+</ol>
+
+      <button class="btn btn-success mt-3" data-bs-toggle="modal" data-bs-target="#orderModal">Order Now</button>
+
+    </div>
+
+    <div class="card">
+      <img src="image/frash4.webp" alt="Womens's Product 4" width="150">
+      <h3>Creams</h3>
+      <p>Gentle cream made for sensitive skin.</p>
+      <p><strong>Size:</strong> 450 ml</p>
+  <p><strong>Price:</strong> ₹999</p>
+      <div class="quantity-control">
+        <button onclick="decreaseQty(3)">-</button>
+        <input type="text" id="qty3" value="1" readonly>
+        <button onclick="increaseQty(3)">+</button>
+      </div>
+      <h2>Steps:</h2>
+      <ol class="list-group list-group-numbered">
+  <li class="list-group-item">Gentle on sensitive skin, free from harsh chemicals.</li>
+  <li class="list-group-item">Maintains skin's natural moisture balance.</li>
+  <li class="list-group-item">Provides a smooth, matte finish after use.</li>
+  <li class="list-group-item">Dermatologically tested for daily use.</li>
+</ol>
+   <button class="btn btn-success mt-3" data-bs-toggle="modal" data-bs-target="#orderModal">Order Now</button>
+
+    </div>
+
+  </div>
+
+<div class="modal fade" id="orderModal" tabindex="-1" aria-labelledby="orderModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-4" id="orderModalLabel">Customer Order Form</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form id="orderForm">
+          <div class="mb-3">
+            <label for="name" class="form-label">Full Name</label>
+            <input type="text" class="form-control" id="name" required>
+          </div>
+          <div class="mb-3">
+            <label for="phone" class="form-label">Phone Number</label>
+            <input type="tel" class="form-control" id="phone" required>
+          </div>
+          <div class="mb-3">
+            <label for="email" class="form-label">Email (optional)</label>
+            <input type="email" class="form-control" id="email">
+          </div>
+          <div class="mb-3">
+            <label for="address" class="form-label">Full Address</label>
+            <textarea class="form-control" id="address" rows="3" required></textarea>
+          </div>
+          <div class="mb-3">
+            <label for="product" class="form-label">Product Name</label>
+            <input type="text" class="form-control" id="product" required>
+          </div>
+          <div class="mb-3">
+            <label for="quantity" class="form-label">Quantity</label>
+            <input type="number" class="form-control" id="quantity" min="1" value="1">
+          </div>
+          <div class="mb-3">
+            <label for="message" class="form-label">Additional Notes (optional)</label>
+            <textarea class="form-control" id="message" rows="2"></textarea>
+          </div>
+          <div class="d-grid gap-2">
+            <button type="submit" class="btn btn-primary">Buy Now</button>
+          </div>
+        </form>
+
+        <div id="thankMsg" class="alert alert-success mt-4 d-none text-center">
+          🎉 Thank you for shopping with us! Visit again. 🛍️
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content text-center">
+      <div class="modal-header">
+        <h5 class="modal-title" id="confirmModalLabel">Confirm Your Details</h5>
+      </div>
+      <div class="modal-body" id="confirmDetails">
+   
+      </div>
+      <div class="modal-footer justify-content-center">
+        <button type="button" class="btn btn-success" id="confirmYes">Yes, Confirm</button>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  const form = document.getElementById("orderForm");
+  const confirmDetails = document.getElementById("confirmDetails");
+  const thankMsg = document.getElementById("thankMsg");
+
+  form.addEventListener("submit", function (e) {
+    e.preventDefault(); 
+
+    const name = document.getElementById("name").value;
+    const phone = document.getElementById("phone").value;
+    const email = document.getElementById("email").value || "N/A";
+    const address = document.getElementById("address").value;
+    const product = document.getElementById("product").value;
+    const quantity = document.getElementById("quantity").value;
+    const message = document.getElementById("message").value || "N/A";
+
+    confirmDetails.innerHTML = `
+      <p><strong>Name:</strong> ${name}</p>
+      <p><strong>Phone:</strong> ${phone}</p>
+      <p><strong>Email:</strong> ${email}</p>
+      <p><strong>Address:</strong> ${address}</p>
+      <p><strong>Product:</strong> ${product}</p>
+      <p><strong>Quantity:</strong> ${quantity}</p>
+      <p><strong>Notes:</strong> ${message}</p>
+    `;
+
+    const confirmModal = new bootstrap.Modal(document.getElementById("confirmModal"));
+    confirmModal.show();
+  });
+
+
+  document.getElementById("confirmYes").addEventListener("click", function () {
+    const confirmModal = bootstrap.Modal.getInstance(document.getElementById("confirmModal"));
+    confirmModal.hide();
+
+    document.getElementById("orderForm").classList.add("d-none");
+    thankMsg.classList.remove("d-none");
+  });
+</script>
+
+
+<script>
+  function increaseQty(index) {
+    let input = document.getElementById("qty" + index);
+    let value = parseInt(input.value);
+    if (value < 10) input.value = value + 1;
+  }
+
+  function decreaseQty(index) {
+    let input = document.getElementById("qty" + index);
+    let value = parseInt(input.value);
+    if (value > 1) input.value = value - 1;
+  }
+
+  function showMessage() {
+    document.getElementById("orderMsg").classList.remove("d-none");
+  }
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>
