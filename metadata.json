@@ -1,0 +1,6 @@
+{
+  "name": "GlowNext",
+  "description": "A premium facial product shop with integrated skin analysis tool.",
+  "requestFramePermissions": ["camera"],
+  "majorCapabilities": []
+}
