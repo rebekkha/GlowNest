@@ -51,11 +51,11 @@ export default function SkinScanner({ onResults }: SkinScannerProps) {
       className="max-w-4xl mx-auto mt-12 px-4"
     >
       <div className="text-center mb-12">
-        <h2 className="text-5xl font-display font-medium text-white italic mb-4">Precision Analysis</h2>
-        <p className="text-pink-royal tracking-[0.2em] uppercase text-xs font-semibold">Our AI determines your skin's unique signature</p>
+        <h2 className="text-5xl font-display font-medium text-white italic mb-4">Premium Skin Signature</h2>
+        <p className="text-[#D4AF37] tracking-[0.2em] uppercase text-xs font-semibold">Our flagship premium AI reveals your elite complexion</p>
       </div>
 
-      <div className="relative aspect-video rounded-3xl overflow-hidden glass border-2 border-pink-royal/20 shadow-2xl shadow-pink-royal/20 max-w-2xl mx-auto">
+      <div className="relative aspect-video rounded-3xl overflow-hidden glass border-2 border-[#D4AF37]/20 shadow-2xl shadow-[#D4AF37]/20 max-w-2xl mx-auto">
         {!capturedImage ? (
           <Webcam
             audio={false}
@@ -77,7 +77,7 @@ export default function SkinScanner({ onResults }: SkinScannerProps) {
               className="absolute inset-0 z-20 pointer-events-none"
             >
               <div className="scan-line" />
-              <div className="absolute inset-0 bg-pink-royal/10 backdrop-blur-[2px]" />
+              <div className="absolute inset-0 bg-[#D4AF37]/10 backdrop-blur-[2px]" />
               <div className="absolute inset-0 flex items-center justify-center">
                 <div className="text-center">
                   <div className="flex justify-center mb-4">
@@ -85,10 +85,10 @@ export default function SkinScanner({ onResults }: SkinScannerProps) {
                       animate={{ rotate: 360 }}
                       transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
                     >
-                      <Zap className="w-12 h-12 text-pink-royal fill-pink-royal/30" />
+                      <Zap className="w-12 h-12 text-[#D4AF37] fill-[#D4AF37]/30" />
                     </motion.div>
                   </div>
-                  <p className="text-pink-royal font-display italic text-2xl tracking-wider">Analyzing Epidermal Layers...</p>
+                  <p className="text-[#D4AF37] font-display italic text-2xl tracking-wider">Analyzing Premium Signature...</p>
                 </div>
               </div>
             </motion.div>
@@ -116,10 +116,10 @@ export default function SkinScanner({ onResults }: SkinScannerProps) {
       </div>
 
       <div className="mt-16 grid grid-cols-4 gap-8">
-        {['AI Driven', 'Royal Care', 'Precision', 'Eco-Luxury'].map((feature, i) => (
+        {['VIP Analysis', 'Royal Care', 'Pure Precision', 'Eco-Luxury'].map((feature, i) => (
           <div key={i} className="text-center">
             <p className="text-[10px] text-white/40 uppercase font-black tracking-widest mb-2">{feature}</p>
-            <div className="h-[1px] w-full bg-gradient-to-r from-transparent via-pink-royal/30 to-transparent" />
+            <div className="h-[1px] w-full bg-gradient-to-r from-transparent via-[#D4AF37]/30 to-transparent" />
           </div>
         ))}
       </div>

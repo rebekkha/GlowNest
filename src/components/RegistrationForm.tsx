@@ -60,26 +60,26 @@ export default function RegistrationForm({ onComplete }: RegistrationFormProps) 
       exit={{ opacity: 0, scale: 0.95 }}
       className="max-w-2xl mx-auto glass p-8 rounded-3xl mt-12 relative overflow-hidden"
     >
-      <div className="absolute top-0 right-0 w-32 h-32 bg-pink-royal/5 rounded-full -mr-16 -mt-16 blur-2xl" />
+      <div className="absolute top-0 right-0 w-32 h-32 bg-[#D4AF37]/10 rounded-full -mr-16 -mt-16 blur-2xl" />
       
       <div className="text-center mb-10">
-        <h2 className="text-4xl font-display font-bold text-pink-royal mb-2 italic">Welcome to GlowNext</h2>
-        <p className="text-white/60 font-light tracking-wide uppercase text-xs">Define Your Radiance</p>
+        <h2 className="text-4xl font-display font-bold text-[#D4AF37] mb-2 italic">Welcome to GlowNext Premium</h2>
+        <p className="text-muted font-light tracking-wide uppercase text-xs">Unlock Your Elite Radiance</p>
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-6">
         <div className="flex flex-col items-center mb-8">
           <div 
             onClick={() => fileInputRef.current?.click()}
-            className="w-32 h-32 rounded-full border-2 border-dashed border-pink-royal/30 flex items-center justify-center cursor-pointer hover:border-pink-royal transition-colors relative group overflow-hidden bg-white/5"
+            className="w-32 h-32 rounded-full border-2 border-dashed border-[#D4AF37]/30 flex items-center justify-center cursor-pointer hover:border-[#D4AF37] transition-colors relative group overflow-hidden bg-white/5"
           >
             {profile.profilePic ? (
               <img src={profile.profilePic} alt="Profile" className="w-full h-full object-cover" />
             ) : (
-              <Camera className="w-8 h-8 text-pink-royal/50 group-hover:text-pink-royal transition-colors" />
+              <Camera className="w-8 h-8 text-[#D4AF37]/50 group-hover:text-[#D4AF37] transition-colors" />
             )}
             <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity">
-              <span className="text-[10px] uppercase font-bold text-pink-royal">Edit Photo</span>
+              <span className="text-[10px] uppercase font-bold text-[#D4AF37]">Edit Photo</span>
             </div>
           </div>
           <input 
@@ -93,14 +93,14 @@ export default function RegistrationForm({ onComplete }: RegistrationFormProps) 
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="space-y-2">
-            <label className="text-[10px] uppercase font-bold text-pink-royal ml-1">Full Name</label>
+            <label className="text-[10px] uppercase font-bold text-[#D4AF37] ml-1">Full Name</label>
             <div className="relative">
-              <User className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-pink-royal/50" />
+              <User className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-[#D4AF37]/50" />
               <input
                 required
                 type="text"
                 placeholder="Enter your name"
-                className="w-full bg-white/5 border border-white/10 rounded-xl py-3 pl-12 pr-4 focus:border-pink-royal outline-none transition-colors"
+                className="w-full bg-white/5 border border-white/10 rounded-xl py-3 pl-12 pr-4 focus:border-[#D4AF37] outline-none transition-colors"
                 value={profile.name}
                 onChange={prev => setProfile({ ...profile, name: prev.target.value })}
               />
@@ -108,26 +108,26 @@ export default function RegistrationForm({ onComplete }: RegistrationFormProps) 
           </div>
 
           <div className="space-y-2">
-            <label className="text-[10px] uppercase font-bold text-pink-royal ml-1">Age</label>
+            <label className="text-[10px] uppercase font-bold text-[#D4AF37] ml-1">Age</label>
             <input
               required
               type="number"
               placeholder="Your age"
-              className="w-full bg-white/5 border border-white/10 rounded-xl py-3 px-4 focus:border-pink-royal outline-none transition-colors"
+              className="w-full bg-white/5 border border-white/10 rounded-xl py-3 px-4 focus:border-[#D4AF37] outline-none transition-colors"
               value={profile.age}
               onChange={prev => setProfile({ ...profile, age: prev.target.value })}
             />
           </div>
 
           <div className="space-y-2">
-            <label className="text-[10px] uppercase font-bold text-pink-royal ml-1">Phone Number</label>
+            <label className="text-[10px] uppercase font-bold text-[#D4AF37] ml-1">Phone Number</label>
             <div className="relative">
-              <Phone className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-pink-royal/50" />
+              <Phone className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-[#D4AF37]/50" />
               <input
                 required
                 type="tel"
                 placeholder="+1 234 567 890"
-                className="w-full bg-white/5 border border-white/10 rounded-xl py-3 pl-12 pr-4 focus:border-pink-royal outline-none transition-colors"
+                className="w-full bg-white/5 border border-white/10 rounded-xl py-3 pl-12 pr-4 focus:border-[#D4AF37] outline-none transition-colors"
                 value={profile.phone}
                 onChange={prev => setProfile({ ...profile, phone: prev.target.value })}
               />
@@ -135,12 +135,12 @@ export default function RegistrationForm({ onComplete }: RegistrationFormProps) 
           </div>
 
           <div className="space-y-2">
-            <label className="text-[10px] uppercase font-bold text-pink-royal ml-1">Pin Code</label>
+            <label className="text-[10px] uppercase font-bold text-[#D4AF37] ml-1">Pin Code</label>
             <input
               required
               type="text"
               placeholder="Zip code"
-              className="w-full bg-white/5 border border-white/10 rounded-xl py-3 px-4 focus:border-pink-royal outline-none transition-colors"
+              className="w-full bg-white/5 border border-white/10 rounded-xl py-3 px-4 focus:border-[#D4AF37] outline-none transition-colors"
               value={profile.pinCode}
               onChange={prev => setProfile({ ...profile, pinCode: prev.target.value })}
             />
@@ -148,13 +148,13 @@ export default function RegistrationForm({ onComplete }: RegistrationFormProps) 
         </div>
 
         <div className="space-y-2">
-          <label className="text-[10px] uppercase font-bold text-pink-royal ml-1">Delivery Address</label>
+          <label className="text-[10px] uppercase font-bold text-[#D4AF37] ml-1">Delivery Address</label>
           <div className="relative">
-            <MapPin className="absolute left-4 top-4 w-4 h-4 text-pink-royal/50" />
+            <MapPin className="absolute left-4 top-4 w-4 h-4 text-[#D4AF37]/50" />
             <textarea
               required
               placeholder="Your street address"
-              className="w-full bg-white/5 border border-white/10 rounded-xl py-3 pl-12 pr-4 min-h-[100px] focus:border-pink-royal outline-none transition-colors"
+              className="w-full bg-white/5 border border-white/10 rounded-xl py-3 pl-12 pr-4 min-h-[100px] focus:border-[#D4AF37] outline-none transition-colors"
               value={profile.address}
               onChange={prev => setProfile({ ...profile, address: prev.target.value })}
             />
@@ -168,14 +168,14 @@ export default function RegistrationForm({ onComplete }: RegistrationFormProps) 
               animate={{ height: 'auto', opacity: 1 }}
               className="space-y-2 overflow-hidden"
             >
-              <label className="text-[10px] uppercase font-bold text-pink-royal ml-1">Enter OTP (Sent to mobile)</label>
+              <label className="text-[10px] uppercase font-bold text-[#D4AF37] ml-1">Enter OTP (Sent to mobile)</label>
               <div className="relative">
-                <CheckCircle2 className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-pink-royal/50" />
+                <CheckCircle2 className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-[#D4AF37]/50" />
                 <input
                   required
                   type="text"
                   placeholder="Demo OTP: 1234"
-                  className="w-full bg-white/5 border border-white/10 rounded-xl py-3 pl-12 pr-4 focus:border-pink-royal outline-none transition-colors text-center tracking-[1em]"
+                  className="w-full bg-white/5 border border-white/10 rounded-xl py-3 pl-12 pr-4 focus:border-[#D4AF37] outline-none transition-colors text-center tracking-[1em]"
                   value={otp}
                   onChange={prev => setOtp(prev.target.value)}
                 />
@@ -197,7 +197,7 @@ export default function RegistrationForm({ onComplete }: RegistrationFormProps) 
         </AnimatePresence>
 
         <button type="submit" className="btn-premium w-full mt-4 py-4 text-lg">
-          {isOtpSent ? 'Verify & Continue' : 'Send Verification OTP'}
+          {isOtpSent ? 'Verify & Enter Premium' : 'Unlock Premium Access'}
         </button>
       </form>
     </motion.div>

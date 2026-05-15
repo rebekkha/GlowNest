@@ -64,18 +64,17 @@ export default function ProductRecommendations({ skinType }: ProductRecommendati
       className="max-w-6xl mx-auto mt-12 pb-24 px-4"
     >
       <div className="glass p-12 rounded-[3rem] mb-16 relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-64 h-64 bg-pink-royal/10 rounded-full -mr-32 -mt-32 blur-3xl" />
+        <div className="absolute top-0 right-0 w-64 h-64 bg-[#D4AF37]/12 rounded-full -mr-32 -mt-32 blur-3xl" />
         <div className="relative z-10">
-          <div className="flex items-center gap-2 text-pink-royal mb-4">
-            <Star className="w-5 h-5 fill-pink-royal" />
-            <span className="uppercase tracking-[0.3em] font-bold text-xs">Analysis Result</span>
+          <div className="flex items-center gap-2 text-[#D4AF37] mb-4">
+            <Star className="w-5 h-5 fill-[#D4AF37]" />
+            <span className="uppercase tracking-[0.3em] font-bold text-xs">Premium Curation</span>
           </div>
           <h2 className="text-6xl font-display font-medium text-white italic mb-6">
-            Your Skin is <span className="text-pink-royal">{skinType}</span>
+            Your Skin is <span className="text-[#D4AF37]">{skinType}</span>
           </h2>
           <p className="max-w-2xl text-lg text-white/70 leading-relaxed font-light">
-            Based on our advanced scanning technology, we've curated a selection of premium, organic treatments 
-            specifically designed to balance and enhance your unique complexion.
+            Based on our exclusive premium scan, we've handpicked an elite ritual collection to nourish, refine, and illuminate your complexion.
           </p>
         </div>
       </div>
@@ -87,7 +86,7 @@ export default function ProductRecommendations({ skinType }: ProductRecommendati
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: i * 0.1 }}
-            className="group glass rounded-3xl overflow-hidden hover:border-pink-royal/50 transition-all duration-500"
+            className="group glass rounded-3xl overflow-hidden hover:border-[#D4AF37]/50 transition-all duration-500"
           >
             <div className="relative h-72 overflow-hidden">
               <img 
@@ -97,25 +96,25 @@ export default function ProductRecommendations({ skinType }: ProductRecommendati
               />
               <div className="absolute top-4 left-4">
                 <div className="bg-black/60 backdrop-blur-md px-3 py-1 rounded-full border border-white/10 flex items-center gap-2">
-                  <Sparkles className="w-3 h-3 text-pink-royal" />
+                  <Sparkles className="w-3 h-3 text-[#D4AF37]" />
                   <span className="text-[10px] uppercase font-bold text-white tracking-widest">{skinType} Care</span>
                 </div>
               </div>
             </div>
             
             <div className="p-8">
-              <h3 className="text-2xl font-display font-bold text-white mb-3 group-hover:text-pink-royal transition-colors">{product.name}</h3>
+              <h3 className="text-2xl font-display font-bold text-white mb-3 group-hover:text-[#D4AF37] transition-colors">{product.name}</h3>
               <p className="text-white/60 text-sm mb-6 leading-relaxed font-light line-clamp-2">{product.description}</p>
               
               <div className="space-y-4">
                 <div className="flex items-start gap-4 p-4 rounded-2xl bg-white/5 border border-white/5">
-                  <Info className="w-4 h-4 text-pink-royal mt-1 shrink-0" />
+                  <Info className="w-4 h-4 text-[#D4AF37] mt-1 shrink-0" />
                   <p className="text-xs text-white/80">{product.benefit}</p>
                 </div>
                 
                 <button className="btn-premium w-full flex items-center justify-center gap-3">
                   <ShoppingBag className="w-4 h-4" />
-                  Add to Collection
+                  Add to Premium Edit
                 </button>
               </div>
             </div>
@@ -124,11 +123,11 @@ export default function ProductRecommendations({ skinType }: ProductRecommendati
       </div>
 
       <div className="mt-20 text-center">
-        <p className="text-white/40 font-light italic mb-2 tracking-wide">Standard GlowNext Terms Apply</p>
-        <div className="flex justify-center gap-6 text-[10px] uppercase tracking-[0.2em] font-bold text-white/30">
-          <a href="#" className="hover:text-pink-royal">Ingredients</a>
-          <a href="#" className="hover:text-pink-royal">Sourcing</a>
-          <a href="#" className="hover:text-pink-royal">Ethics</a>
+        <p className="text-muted font-light italic mb-2 tracking-wide">GlowNext Premium Membership Terms Apply</p>
+        <div className="flex justify-center gap-6 text-[10px] uppercase tracking-[0.2em] font-bold text-muted">
+          <a href="#" className="hover:text-[#D4AF37]">Ingredients</a>
+          <a href="#" className="hover:text-[#D4AF37]">Sourcing</a>
+          <a href="#" className="hover:text-[#D4AF37]">Ethics</a>
         </div>
       </div>
     </motion.div>
