@@ -39,7 +39,7 @@ const Scanner: React.FC = () => {
       const mimeType = file.type || "image/jpeg";
 
       try {
-        const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`, {
+        const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent?key=${apiKey}`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
@@ -66,7 +66,9 @@ const Scanner: React.FC = () => {
         });
 
         if (!response.ok) {
-          throw new Error(`Gemini API error: ${response.status}`);
+          const errorData = await response.json().catch(() => null);
+          const errorMsg = errorData?.error?.message || `Status ${response.status}`;
+          throw new Error(`Gemini API error: ${errorMsg}`);
         }
 
         const data = await response.json();
@@ -79,9 +81,9 @@ const Scanner: React.FC = () => {
           console.error("Failed to parse JSON response:", content);
           throw new Error("Invalid response format from AI");
         }
-      } catch (error) {
+      } catch (error: any) {
         console.error("Error analyzing image:", error);
-        alert("Error analyzing image. Please check your Gemini API key and try again.");
+        alert(`Failed to analyze image. ${error.message}`);
       } finally {
         setIsScanning(false);
       }
