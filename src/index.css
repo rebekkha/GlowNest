@@ -4,39 +4,42 @@
 
 @layer base {
   :root {
-    --color-bg: 250, 250, 250; /* Light theme bg */
-    --color-text: 10, 10, 10;
-    --color-text-light: 100, 100, 100;
-    --color-primary: 255, 92, 141; /* Pink */
-    --color-secondary: 131, 56, 236; /* Purple */
-    --color-glass-bg: rgba(255, 255, 255, 0.7);
-    --color-glass-border: rgba(0, 0, 0, 0.05);
-    --color-glass-shadow: rgba(0, 0, 0, 0.05);
-    --color-button-text: 255, 255, 255;
+    /* Base Light Theme: Pearl & Coral */
+    --color-bg: 253 252 250;
+    --color-text: 28 25 23;
+    --color-text-light: 120 113 108;
+    --color-primary: 228 134 127;
+    --color-secondary: 236 175 134;
+    --color-glass-bg: rgba(255, 255, 255, 0.65);
+    --color-glass-border: rgba(255, 255, 255, 0.8);
+    --color-glass-shadow: rgba(0, 0, 0, 0.04);
+    --color-button-text: 255 255 255;
   }
 
   [data-theme="pink"] {
-    --color-bg: 255, 240, 245; /* Light Pink */
-    --color-text: 51, 0, 27; /* Dark Burgundy */
-    --color-text-light: 102, 51, 77;
-    --color-primary: 255, 51, 119;
-    --color-secondary: 204, 0, 82;
-    --color-glass-bg: rgba(255, 255, 255, 0.6);
-    --color-glass-border: rgba(255, 51, 119, 0.1);
-    --color-glass-shadow: rgba(255, 51, 119, 0.1);
-    --color-button-text: 255, 255, 255;
+    /* Pink Theme: Rosewood Blush */
+    --color-bg: 253 246 246;
+    --color-text: 76 32 43;
+    --color-text-light: 161 109 121;
+    --color-primary: 219 99 135;
+    --color-secondary: 232 144 166;
+    --color-glass-bg: rgba(255, 255, 255, 0.5);
+    --color-glass-border: rgba(255, 255, 255, 0.7);
+    --color-glass-shadow: rgba(219, 99, 135, 0.08);
+    --color-button-text: 255 255 255;
   }
 
   [data-theme="dark"] {
-    --color-bg: 10, 10, 10; /* Black */
-    --color-text: 255, 255, 255;
-    --color-text-light: 161, 161, 170;
-    --color-primary: 76, 201, 240; /* Ice Blue for men */
-    --color-secondary: 67, 97, 238; /* Deep Blue */
-    --color-glass-bg: rgba(25, 25, 25, 0.65);
-    --color-glass-border: rgba(255, 255, 255, 0.08);
-    --color-glass-shadow: rgba(0, 0, 0, 0.3);
-    --color-button-text: 10, 10, 10;
+    /* Dark Theme: Midnight Gold */
+    --color-bg: 12 12 14;
+    --color-text: 245 245 245;
+    --color-text-light: 140 140 150;
+    --color-primary: 224 185 118;
+    --color-secondary: 200 150 90;
+    --color-glass-bg: rgba(24, 24, 28, 0.65);
+    --color-glass-border: rgba(224, 185, 118, 0.15);
+    --color-glass-shadow: rgba(0, 0, 0, 0.4);
+    --color-button-text: 12 12 14;
   }
 
   body {
@@ -53,31 +56,34 @@
 @layer utilities {
   .glass-header {
     background-color: var(--color-glass-bg);
-    backdrop-filter: blur(24px);
+    backdrop-filter: blur(32px);
+    -webkit-backdrop-filter: blur(32px);
     border-bottom: 1px solid var(--color-glass-border);
-    box-shadow: 0 4px 30px var(--color-glass-shadow);
+    box-shadow: 0 4px 40px var(--color-glass-shadow);
     @apply transition-colors duration-500;
   }
   
   .glass-card {
     background-color: var(--color-glass-bg);
     backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
     border: 1px solid var(--color-glass-border);
     box-shadow: 0 8px 32px 0 var(--color-glass-shadow);
-    @apply rounded-[30px] overflow-hidden transition-colors duration-500;
+    @apply rounded-[32px] overflow-hidden transition-colors duration-500;
   }
   
   .glass-input {
     background-color: var(--color-glass-bg);
     border: 1px solid var(--color-glass-border);
     color: rgb(var(--color-text));
-    @apply rounded-xl focus:border-theme-primary/50 focus:ring-1 focus:ring-theme-primary/50 outline-none backdrop-blur-sm transition-all;
+    @apply rounded-xl focus:border-theme-primary/60 focus:ring-4 focus:ring-theme-primary/20 outline-none backdrop-blur-md transition-all;
   }
   
   .btn-primary {
-    background: linear-gradient(to right, rgb(var(--color-primary)), rgb(var(--color-secondary)));
+    background: linear-gradient(135deg, rgb(var(--color-primary)), rgb(var(--color-secondary)));
     color: rgb(var(--color-button-text));
-    @apply font-semibold rounded-full shadow-[0_0_20px_rgba(0,0,0,0.1)] hover:shadow-[0_0_30px_rgba(0,0,0,0.15)] hover:-translate-y-0.5 transition-all duration-300;
+    box-shadow: 0 4px 15px rgb(var(--color-primary) / 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    @apply font-bold tracking-wide rounded-full hover:shadow-[0_8px_25px_rgb(var(--color-primary)/0.35)] hover:-translate-y-0.5 active:translate-y-0 active:shadow-md transition-all duration-300;
   }
 }
 

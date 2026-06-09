@@ -1,122 +1,206 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useStore } from '../context/StoreContext';
-import { motion, Variants } from 'framer-motion';
-import { Package, Star, Calendar, MapPin, Phone, User, ArrowLeft } from 'lucide-react';
+import { Package, Clock, CheckCircle2, Truck, XCircle, Search, ChevronRight, X } from 'lucide-react';
 
 const Orders: React.FC = () => {
-  const { orders } = useStore();
+  const { orders, cancelOrder } = useStore();
+  const [filter, setFilter] = useState('all');
+  const [search, setSearch] = useState('');
+  const [cancelId, setCancelId] = useState<string | null>(null);
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: { opacity: 1, transition: { staggerChildren: 0.15 } }
-  };
+  const filteredOrders = orders.filter(o => {
+    const matchesFilter = filter === 'all' || o.status === filter;
+    const matchesSearch = o.id.toLowerCase().includes(search.toLowerCase()) || 
+                          o.productName.toLowerCase().includes(search.toLowerCase());
+    return matchesFilter && matchesSearch;
+  }).sort((a, b) => new Date(b.datePlaced).getTime() - new Date(a.datePlaced).getTime());
 
-  const itemVariants: Variants = {
-    hidden: { y: 20, opacity: 0 },
-    visible: { y: 0, opacity: 1, transition: { duration: 0.5 } }
+  const getStatusConfig = (status: string) => {
+    switch (status) {
+      case 'confirmed': return { icon: CheckCircle2, color: 'text-emerald-500', bg: 'bg-emerald-500/10', border: 'border-emerald-500/20', label: 'Confirmed' };
+      case 'processing': return { icon: Clock, color: 'text-amber-500', bg: 'bg-amber-500/10', border: 'border-amber-500/20', label: 'Processing' };
+      case 'shipped': return { icon: Truck, color: 'text-blue-500', bg: 'bg-blue-500/10', border: 'border-blue-500/20', label: 'Shipped' };
+      case 'delivered': return { icon: Package, color: 'text-purple-500', bg: 'bg-purple-500/10', border: 'border-purple-500/20', label: 'Delivered' };
+      default: return { icon: Package, color: 'text-theme-text-light', bg: 'bg-theme-text/5', border: 'border-theme-text/10', label: status };
+    }
   };
 
   return (
-    <div className="min-h-screen pt-32 pb-24 px-6 relative overflow-hidden">
-      {/* Background Glow */}
-      <div className="absolute top-[-20%] left-[-10%] w-[50%] h-[50%] bg-theme-primary/20 rounded-full blur-[150px] pointer-events-none z-[-1]"></div>
+    <div className="pt-24 min-h-screen px-4 md:px-8 max-w-6xl mx-auto pb-20">
       
-      <div className="max-w-4xl mx-auto">
+      {/* Header */}
+      <div className="relative w-full rounded-[2rem] overflow-hidden mb-10 p-8 md:p-12 bg-gradient-to-br from-theme-primary/10 to-theme-secondary/5 border border-theme-text/5 text-center">
+        <h1 className="text-3xl md:text-5xl font-heading font-bold text-transparent bg-clip-text bg-gradient-to-r from-theme-text via-theme-text to-theme-primary mb-3">
+          Your Orders
+        </h1>
+        <p className="text-theme-text-light max-w-xl mx-auto">Track, manage, and review your GlowNest purchases.</p>
+      </div>
+
+      {/* Controls */}
+      <div className="flex flex-col md:flex-row gap-4 justify-between items-center mb-8">
+        <div className="flex gap-2 w-full md:w-auto overflow-x-auto pb-2 md:pb-0 hide-scrollbar">
+          {['all', 'confirmed', 'processing', 'shipped', 'delivered'].map(f => (
+            <button
+              key={f}
+              onClick={() => setFilter(f)}
+              className={`px-5 py-2.5 rounded-xl text-sm font-semibold whitespace-nowrap transition-all ${
+                filter === f 
+                  ? 'bg-theme-primary text-white shadow-[0_0_15px_rgba(255,92,141,0.3)]' 
+                  : 'bg-theme-text/5 text-theme-text hover:bg-theme-text/10'
+              }`}
+            >
+              {f.charAt(0).toUpperCase() + f.slice(1)}
+            </button>
+          ))}
+        </div>
+
+        <div className="relative w-full md:w-72">
+          <Search size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-theme-text/40" />
+          <input 
+            type="text" 
+            placeholder="Search by ID or product..." 
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            className="w-full pl-11 pr-4 py-3 bg-theme-text/5 border border-theme-text/10 rounded-xl text-sm focus:border-theme-primary/50 outline-none text-theme-text"
+          />
+        </div>
+      </div>
+
+      {/* Orders List */}
+      {filteredOrders.length === 0 ? (
         <motion.div 
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="flex items-center justify-between mb-12"
+          initial={{ opacity: 0 }} animate={{ opacity: 1 }}
+          className="text-center py-20 glass-card border border-theme-text/5"
         >
-          <div>
-            <h2 className="text-4xl md:text-5xl text-transparent bg-clip-text bg-gradient-to-r from-white to-white/60 font-heading font-bold mb-2">
-              Royal Order Ledger
-            </h2>
-            <p className="text-theme-text-light text-sm">Your premium selections, curated and ready.</p>
+          <div className="w-20 h-20 bg-theme-text/5 rounded-full flex items-center justify-center mx-auto mb-6 text-theme-text/30">
+            <Package size={32} />
           </div>
-          
-          <Link to="/" className="hidden md:flex items-center gap-2 text-theme-primary hover:text-theme-text transition-colors border border-theme-text/10 px-5 py-2.5 rounded-full hover:bg-theme-text/5">
-            <ArrowLeft size={16} />
-            Back to Gallery
+          <h3 className="text-xl font-heading font-bold text-theme-text mb-2">No orders found</h3>
+          <p className="text-theme-text-light mb-6 text-sm max-w-md mx-auto">
+            {search || filter !== 'all' 
+              ? "We couldn't find any orders matching your current filters." 
+              : "You haven't placed any orders yet. Start your skincare journey today!"}
+          </p>
+          <Link to="/category/women" className="btn-primary px-8 py-3 inline-flex items-center gap-2">
+            Start Shopping <ChevronRight size={16} />
           </Link>
         </motion.div>
+      ) : (
+        <div className="space-y-4">
+          <AnimatePresence mode="popLayout">
+            {filteredOrders.map(order => {
+              const conf = getStatusConfig(order.status);
+              const ConfIcon = conf.icon;
+              return (
+                <motion.div
+                  layout
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, scale: 0.95 }}
+                  key={order.id}
+                  className="glass-card p-5 md:p-6 border border-theme-text/5 flex flex-col md:flex-row gap-6 md:items-center relative group"
+                >
+                  {/* Order Info */}
+                  <div className="flex-1">
+                    <div className="flex items-center justify-between md:justify-start gap-4 mb-3">
+                      <span className="font-mono text-xs font-bold text-theme-text/50 bg-theme-text/5 px-2.5 py-1 rounded-md">
+                        {order.id}
+                      </span>
+                      <span className="text-xs text-theme-text-light">
+                        {new Date(order.datePlaced).toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' })}
+                      </span>
+                    </div>
+                    <h3 className="text-lg font-heading font-bold text-theme-text mb-1">{order.productName}</h3>
+                    <div className="text-theme-primary font-bold">₹{order.price}</div>
+                  </div>
 
-        <motion.div 
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
-          className="space-y-6"
-        >
-          {orders.length === 0 ? (
-            <motion.div variants={itemVariants} className="glass-card p-16 text-center border border-theme-text/10 flex flex-col items-center justify-center">
-              <Package size={64} className="text-theme-text/20 mb-6" />
-              <h3 className="text-2xl text-theme-text font-heading font-semibold mb-2">No Imperial Records Found</h3>
-              <p className="text-theme-text-light mb-8 max-w-sm mx-auto">You haven't acquired any premium skincare yet. Discover your glow today.</p>
-              <Link to="/" className="btn-primary py-3 px-8 inline-block">
-                Explore Collections
-              </Link>
+                  {/* Status & Delivery */}
+                  <div className="flex-1 flex flex-col md:items-end gap-3">
+                    <div className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full border ${conf.bg} ${conf.border} ${conf.color} text-sm font-semibold`}>
+                      <ConfIcon size={16} />
+                      {conf.label}
+                    </div>
+                    {order.status !== 'delivered' && (
+                      <div className="text-xs text-theme-text-light flex items-center gap-1.5">
+                        <Truck size={14} className="text-theme-text/40" />
+                        Est. Delivery: <span className="text-theme-text font-medium">{new Date(order.deliveryDate).toLocaleDateString('en-US', { day: 'numeric', month: 'short' })}</span>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Actions */}
+                  <div className="md:ml-4 flex gap-3 pt-4 md:pt-0 border-t md:border-t-0 border-theme-text/5">
+                    {order.productId && (
+                      <Link to={`/product/${order.productId}`} className="flex-1 md:flex-none px-4 py-2.5 bg-theme-text/5 hover:bg-theme-text/10 text-theme-text text-sm font-semibold rounded-xl text-center transition-colors">
+                        Buy Again
+                      </Link>
+                    )}
+                    {(order.status === 'confirmed' || order.status === 'processing') && (
+                      <button 
+                        onClick={() => setCancelId(order.id)}
+                        className="flex-1 md:flex-none px-4 py-2.5 border border-red-500/30 text-red-500 hover:bg-red-500 hover:text-white text-sm font-semibold rounded-xl text-center transition-colors"
+                      >
+                        Cancel
+                      </button>
+                    )}
+                  </div>
+                </motion.div>
+              );
+            })}
+          </AnimatePresence>
+        </div>
+      )}
+
+      {/* Cancel Modal */}
+      <AnimatePresence>
+        {cancelId && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+            <motion.div 
+              initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+              onClick={() => setCancelId(null)}
+              className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+            />
+            <motion.div 
+              initial={{ scale: 0.95, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.95, opacity: 0 }}
+              className="glass-card relative z-10 w-full max-w-md p-8 border border-theme-text/10 shadow-2xl"
+            >
+              <button onClick={() => setCancelId(null)} className="absolute top-4 right-4 text-theme-text/40 hover:text-theme-text">
+                <X size={20} />
+              </button>
+              
+              <div className="w-16 h-16 rounded-full bg-red-500/10 text-red-500 flex items-center justify-center mb-6 mx-auto">
+                <XCircle size={32} />
+              </div>
+              
+              <h3 className="text-2xl font-heading font-bold text-theme-text text-center mb-3">Cancel Order?</h3>
+              <p className="text-theme-text-light text-center mb-8 text-sm">
+                Are you sure you want to cancel order <span className="font-mono text-theme-text font-bold">{cancelId}</span>? This action cannot be undone.
+              </p>
+              
+              <div className="flex gap-3">
+                <button 
+                  onClick={() => setCancelId(null)}
+                  className="flex-1 py-3 bg-theme-text/5 hover:bg-theme-text/10 text-theme-text font-semibold rounded-xl transition-colors"
+                >
+                  Keep Order
+                </button>
+                <button 
+                  onClick={() => {
+                    cancelOrder(cancelId);
+                    setCancelId(null);
+                  }}
+                  className="flex-1 py-3 bg-red-500 hover:bg-red-600 text-white font-semibold rounded-xl transition-colors shadow-lg shadow-red-500/30"
+                >
+                  Yes, Cancel
+                </button>
+              </div>
             </motion.div>
-          ) : (
-            [...orders].reverse().map(o => (
-              <motion.div 
-                key={o.id} 
-                variants={itemVariants}
-                className="glass-card p-6 md:p-8 flex flex-col md:flex-row justify-between items-start md:items-center gap-6 relative overflow-hidden group"
-              >
-                <div className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-theme-primary to-theme-secondary"></div>
-                
-                <div className="flex-1">
-                  <div className="flex items-center gap-3 mb-3">
-                    <h4 className="text-2xl text-theme-text font-heading font-bold">{o.productName}</h4>
-                    <span className="px-3 py-1 bg-theme-primary/20 border border-theme-primary/50 text-theme-primary text-xs rounded-full uppercase tracking-widest font-semibold flex items-center gap-1">
-                      <div className="w-1.5 h-1.5 rounded-full bg-theme-primary animate-pulse"></div>
-                      Confirmed
-                    </span>
-                  </div>
-                  
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-y-2 gap-x-8 text-sm">
-                    <div className="flex items-center gap-2 text-theme-text-light">
-                      <User size={14} className="text-theme-primary" />
-                      <span className="text-theme-text/80">{o.user}</span>
-                    </div>
-                    <div className="flex items-center gap-2 text-theme-text-light">
-                      <Phone size={14} className="text-theme-primary" />
-                      <span className="text-theme-text/80">{o.phone}</span>
-                    </div>
-                    <div className="flex items-start gap-2 text-theme-text-light md:col-span-2 mt-1">
-                      <MapPin size={14} className="text-theme-primary shrink-0 mt-1" />
-                      <span className="text-theme-text/80">{o.address}</span>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="flex flex-row md:flex-col items-center md:items-end justify-between w-full md:w-auto pt-4 md:pt-0 border-t border-theme-text/10 md:border-t-0 mt-2 md:mt-0 gap-4">
-                  <div className="flex text-yellow-400 gap-1 drop-shadow-[0_0_5px_rgba(250,204,21,0.5)]">
-                    {[...Array(5)].map((_, i) => <Star key={i} size={16} fill="currentColor" />)}
-                  </div>
-                  <div className="flex items-center gap-2 text-sm bg-theme-text/5 border border-theme-text/10 px-4 py-2 rounded-xl">
-                    <Calendar size={14} className="text-theme-primary" />
-                    <span className="text-theme-text-light">Expected: <span className="text-theme-text font-medium">{o.deliveryDate}</span></span>
-                  </div>
-                </div>
-              </motion.div>
-            ))
-          )}
-        </motion.div>
-
-        {orders.length > 0 && (
-          <motion.div 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.8 }}
-            className="mt-12 text-center md:hidden"
-          >
-            <Link to="/" className="inline-block px-10 py-4 border border-theme-text/20 text-theme-text rounded-full font-bold shadow-md hover:bg-theme-text/5 transition-colors">
-              Return to Gallery
-            </Link>
-          </motion.div>
+          </div>
         )}
-      </div>
+      </AnimatePresence>
+
     </div>
   );
 };
