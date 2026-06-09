@@ -2,7 +2,7 @@ import React, { useState, useMemo } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useStore } from '../context/StoreContext';
-import { ShoppingBag, Star, Filter, Heart, ArrowRight } from 'lucide-react';
+import { ShoppingBag, Star, Filter, Heart } from 'lucide-react';
 
 const CATEGORY_META: Record<string, { title: string, desc: string, bg: string }> = {
   women: { title: "Women's Collection", desc: "Luxurious, effective formulations designed for daily radiance and long-term skin health.", bg: "from-rose-500/10 to-pink-500/5" },
