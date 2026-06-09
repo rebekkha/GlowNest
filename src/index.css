@@ -1,0 +1,92 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --color-bg: 250, 250, 250; /* Light theme bg */
+    --color-text: 10, 10, 10;
+    --color-text-light: 100, 100, 100;
+    --color-primary: 255, 92, 141; /* Pink */
+    --color-secondary: 131, 56, 236; /* Purple */
+    --color-glass-bg: rgba(255, 255, 255, 0.7);
+    --color-glass-border: rgba(0, 0, 0, 0.05);
+    --color-glass-shadow: rgba(0, 0, 0, 0.05);
+    --color-button-text: 255, 255, 255;
+  }
+
+  [data-theme="pink"] {
+    --color-bg: 255, 240, 245; /* Light Pink */
+    --color-text: 51, 0, 27; /* Dark Burgundy */
+    --color-text-light: 102, 51, 77;
+    --color-primary: 255, 51, 119;
+    --color-secondary: 204, 0, 82;
+    --color-glass-bg: rgba(255, 255, 255, 0.6);
+    --color-glass-border: rgba(255, 51, 119, 0.1);
+    --color-glass-shadow: rgba(255, 51, 119, 0.1);
+    --color-button-text: 255, 255, 255;
+  }
+
+  [data-theme="dark"] {
+    --color-bg: 10, 10, 10; /* Black */
+    --color-text: 255, 255, 255;
+    --color-text-light: 161, 161, 170;
+    --color-primary: 76, 201, 240; /* Ice Blue for men */
+    --color-secondary: 67, 97, 238; /* Deep Blue */
+    --color-glass-bg: rgba(25, 25, 25, 0.65);
+    --color-glass-border: rgba(255, 255, 255, 0.08);
+    --color-glass-shadow: rgba(0, 0, 0, 0.3);
+    --color-button-text: 10, 10, 10;
+  }
+
+  body {
+    background-color: rgb(var(--color-bg));
+    color: rgb(var(--color-text));
+    @apply antialiased min-h-screen font-sans selection:bg-theme-primary selection:text-white transition-colors duration-500;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-heading font-semibold tracking-tight;
+  }
+}
+
+@layer utilities {
+  .glass-header {
+    background-color: var(--color-glass-bg);
+    backdrop-filter: blur(24px);
+    border-bottom: 1px solid var(--color-glass-border);
+    box-shadow: 0 4px 30px var(--color-glass-shadow);
+    @apply transition-colors duration-500;
+  }
+  
+  .glass-card {
+    background-color: var(--color-glass-bg);
+    backdrop-filter: blur(24px);
+    border: 1px solid var(--color-glass-border);
+    box-shadow: 0 8px 32px 0 var(--color-glass-shadow);
+    @apply rounded-[30px] overflow-hidden transition-colors duration-500;
+  }
+  
+  .glass-input {
+    background-color: var(--color-glass-bg);
+    border: 1px solid var(--color-glass-border);
+    color: rgb(var(--color-text));
+    @apply rounded-xl focus:border-theme-primary/50 focus:ring-1 focus:ring-theme-primary/50 outline-none backdrop-blur-sm transition-all;
+  }
+  
+  .btn-primary {
+    background: linear-gradient(to right, rgb(var(--color-primary)), rgb(var(--color-secondary)));
+    color: rgb(var(--color-button-text));
+    @apply font-semibold rounded-full shadow-[0_0_20px_rgba(0,0,0,0.1)] hover:shadow-[0_0_30px_rgba(0,0,0,0.15)] hover:-translate-y-0.5 transition-all duration-300;
+  }
+}
+
+/* Custom Confetti Animation */
+.confetti {
+  position: absolute;
+  animation: fall linear forwards;
+}
+
+@keyframes fall {
+  to { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+}
