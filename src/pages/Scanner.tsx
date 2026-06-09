@@ -24,9 +24,9 @@ const Scanner: React.FC = () => {
     if (!file) return;
     setIsScanning(true);
     
-    const apiKey = import.meta.env.VITE_GROQ_API_KEY;
-    if (!apiKey || apiKey === 'your_groq_api_key_here') {
-      alert("Please add your VITE_GROQ_API_KEY to the .env file to enable real AI scanning.");
+    const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
+    if (!apiKey) {
+      alert("Please add your VITE_GEMINI_API_KEY to the .env file to enable real AI scanning.");
       setIsScanning(false);
       return;
     }
@@ -35,44 +35,42 @@ const Scanner: React.FC = () => {
     reader.readAsDataURL(file);
     reader.onload = async () => {
       const base64Image = reader.result as string;
+      const base64Data = base64Image.split(',')[1];
+      const mimeType = file.type || "image/jpeg";
 
       try {
-        const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+        const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`, {
           method: 'POST',
           headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${apiKey}`
+            'Content-Type': 'application/json'
           },
           body: JSON.stringify({
-            model: 'llama-3.2-11b-vision-preview',
-            messages: [
+            contents: [
               {
-                role: 'user',
-                content: [
+                parts: [
+                  { text: "You are an expert clinical dermatologist AI. Analyze this facial image for skincare. Return ONLY a valid JSON object with no markdown formatting. The JSON must match this structure exactly: { \"skinType\": \"Oily\" | \"Dry\" | \"Combination\" | \"Normal\" | \"Sensitive\", \"concerns\": [\"Concern 1\", \"Concern 2\", \"Concern 3\"], \"score\": number between 1 and 100, \"feedback\": \"A short 2-sentence professional feedback based on the visual analysis\", \"recommendedCat\": \"moisturizer\" | \"fresh\" | \"clay\" | \"men\" | \"women\" }" },
                   {
-                    type: 'text',
-                    text: "You are an expert clinical dermatologist AI. Analyze this facial image for skincare. Return ONLY a valid JSON object with no markdown formatting. The JSON must match this structure exactly: { \"skinType\": \"Oily\" | \"Dry\" | \"Combination\" | \"Normal\" | \"Sensitive\", \"concerns\": [\"Concern 1\", \"Concern 2\", \"Concern 3\"], \"score\": number between 1 and 100, \"feedback\": \"A short 2-sentence professional feedback based on the visual analysis\", \"recommendedCat\": \"moisturizer\" | \"fresh\" | \"clay\" | \"men\" | \"women\" }"
-                  },
-                  {
-                    type: 'image_url',
-                    image_url: {
-                      url: base64Image
+                    inlineData: {
+                      mimeType: mimeType,
+                      data: base64Data
                     }
                   }
                 ]
               }
             ],
-            temperature: 0.2,
-            response_format: { type: "json_object" }
+            generationConfig: {
+              temperature: 0.2,
+              responseMimeType: "application/json"
+            }
           })
         });
 
         if (!response.ok) {
-          throw new Error(`Groq API error: ${response.status}`);
+          throw new Error(`Gemini API error: ${response.status}`);
         }
 
         const data = await response.json();
-        const content = data.choices[0].message.content;
+        const content = data.candidates[0].content.parts[0].text;
         
         try {
           const parsedResult = JSON.parse(content);
@@ -82,23 +80,8 @@ const Scanner: React.FC = () => {
           throw new Error("Invalid response format from AI");
         }
       } catch (error) {
-        console.error("Error analyzing image (Groq vision model likely decommissioned):", error);
-        
-        // Fallback mock response so the UI continues to function perfectly for the prototype
-        const mockResult = {
-          skinType: ["Oily", "Dry", "Combination", "Normal", "Sensitive"][Math.floor(Math.random() * 5)],
-          concerns: ["Uneven texture", "Slight redness", "Enlarged pores", "Dehydration"].sort(() => 0.5 - Math.random()).slice(0, 2),
-          score: Math.floor(Math.random() * (95 - 75 + 1)) + 75,
-          feedback: "Your skin barrier appears generally healthy but shows signs of mild environmental stress. A gentle routine focusing on hydration and soothing ingredients will help restore its natural balance.",
-          recommendedCat: ["moisturizer", "fresh", "clay"][Math.floor(Math.random() * 3)]
-        };
-        
-        // Simulate network delay
-        setTimeout(() => {
-          setResult(mockResult);
-          setIsScanning(false);
-        }, 1500);
-        return; // Exit early to avoid hitting the finally block
+        console.error("Error analyzing image:", error);
+        alert("Error analyzing image. Please check your Gemini API key and try again.");
       } finally {
         setIsScanning(false);
       }
@@ -265,6 +248,16 @@ const Scanner: React.FC = () => {
                   <button onClick={analyzeScan} className="flex-1 py-3 btn-primary rounded-xl font-bold flex items-center justify-center gap-2">
                     <Sparkles size={18} /> Analyze
                   </button>
+                </motion.div>
+              )}
+
+              {isScanning && (
+                <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} className="flex flex-col items-center justify-center py-2 gap-3">
+                  <div className="flex items-center gap-2 text-theme-primary font-bold bg-theme-primary/10 px-6 py-3 rounded-full border border-theme-primary/20">
+                    <div className="w-5 h-5 border-2 border-theme-primary border-t-transparent rounded-full animate-spin" />
+                    <span>Analyzing your skin...</span>
+                  </div>
+                  <p className="text-xs text-theme-text-light">Our clinical AI is evaluating your skin profile.</p>
                 </motion.div>
               )}
 
