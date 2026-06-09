@@ -10,7 +10,7 @@ import NewsletterSection from '../components/Home/NewsletterSection';
 
 const Home: React.FC = () => {
   return (
-    <div className="pt-24 overflow-x-hidden relative">
+    <div className="overflow-x-hidden relative">
       {/* Ambient Background */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none -z-10">
         <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-theme-primary/20 rounded-full blur-[120px] animate-blob" />

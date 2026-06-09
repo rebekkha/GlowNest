@@ -121,6 +121,34 @@ const HeroSection: React.FC = () => {
         </motion.div>
       </motion.div>
 
+      {/* Floating Decorative Elements */}
+      <motion.div
+        initial={{ opacity: 0, x: -50, y: 20 }}
+        animate={{ opacity: 1, x: 0, y: [0, -10, 0] }}
+        transition={{ duration: 0.8, y: { repeat: Infinity, duration: 4, ease: "easeInOut" } }}
+        className="hidden lg:flex absolute left-8 xl:left-20 top-1/3 flex-col items-center glass-card p-5 rounded-2xl border-theme-primary/20 shadow-[0_10px_40px_rgba(var(--color-primary),0.15)]"
+      >
+        <div className="w-14 h-14 rounded-full bg-gradient-to-tr from-theme-primary to-theme-secondary flex items-center justify-center text-white mb-3 shadow-lg">
+          <Sparkles size={24} />
+        </div>
+        <span className="text-sm font-bold text-theme-text tracking-wide">100% Organic</span>
+        <span className="text-xs text-theme-text-light">Cruelty-Free Formulas</span>
+      </motion.div>
+
+      <motion.div
+        initial={{ opacity: 0, x: 50, y: -20 }}
+        animate={{ opacity: 1, x: 0, y: [0, 10, 0] }}
+        transition={{ duration: 0.8, delay: 0.2, y: { repeat: Infinity, duration: 5, ease: "easeInOut" } }}
+        className="hidden lg:flex absolute right-8 xl:right-20 top-1/4 flex-col items-center glass-card p-5 rounded-2xl border-theme-secondary/20 shadow-[0_10px_40px_rgba(var(--color-secondary),0.15)]"
+      >
+        <div className="w-14 h-14 rounded-full bg-gradient-to-tr from-theme-secondary to-theme-primary flex items-center justify-center text-white mb-3 shadow-lg">
+          <Search size={24} />
+        </div>
+        <span className="text-sm font-bold text-theme-text tracking-wide">Clinical AI</span>
+        <span className="text-xs text-theme-text-light">Instant Skin Analysis</span>
+      </motion.div>
+
+
       {/* Scroll hint */}
       <motion.div
         initial={{ opacity: 0 }}
