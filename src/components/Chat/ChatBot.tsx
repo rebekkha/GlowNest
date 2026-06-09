@@ -33,26 +33,45 @@ const ChatBot: React.FC = () => {
     setIsLoading(true);
 
     try {
-      const response = await fetch('/api/chat', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          messages: [
-            { role: 'system', content: 'You are a helpful and polite customer support assistant for GlowNest, a premium skincare and wellness brand. Keep your answers concise, professional, and friendly.' },
-            ...messages.map(m => ({ role: m.role, content: m.content })),
-            { role: 'user', content: userMessage }
-          ],
-        }),
-      });
+      const apiKey = import.meta.env.VITE_GROQ_API_KEY;
+      const apiMessages = [
+        { role: 'system', content: 'You are a helpful and polite customer support assistant for GlowNest, a premium skincare and wellness brand. Keep your answers concise, professional, and friendly.' },
+        ...messages.map(m => ({ role: m.role, content: m.content })),
+        { role: 'user', content: userMessage }
+      ];
+
+      let response;
+      if (apiKey) {
+        // Direct API call for local development
+        response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${apiKey}`
+          },
+          body: JSON.stringify({
+            model: 'llama-3.1-8b-instant',
+            messages: apiMessages
+          })
+        });
+      } else {
+        // Fallback to Vercel serverless function
+        response = await fetch('/api/chat', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ messages: apiMessages }),
+        });
+      }
 
       if (!response.ok) {
-        throw new Error('Failed to fetch response');
+        throw new Error(`Failed to fetch response: ${response.status}`);
       }
 
       const data = await response.json();
-      const botMessage = data.choices[0]?.message?.content || 'Sorry, I am having trouble connecting right now.';
+      // Handle both Groq direct response format and our Vercel API format if it ever changes
+      const botMessage = data.choices?.[0]?.message?.content || 'Sorry, I am having trouble connecting right now.';
       
       setMessages(prev => [...prev, { role: 'assistant', content: botMessage }]);
     } catch (error) {
