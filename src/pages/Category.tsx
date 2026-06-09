@@ -13,19 +13,19 @@ const CATEGORY_META: Record<string, { title: string, desc: string, bg: string }>
 };
 
 const Category: React.FC = () => {
-  const { id } = useParams<{ id: string }>();
+  const { type } = useParams<{ type: string }>();
   const { getProductsByCategory, addOrder, toggleWishlist, isWishlisted } = useStore();
   const [filter, setFilter] = useState('all');
   const [showToast, setShowToast] = useState(false);
   const [toastMsg, setToastMsg] = useState('');
 
-  const rawProducts = useMemo(() => getProductsByCategory(id || ''), [id, getProductsByCategory]);
+  const rawProducts = useMemo(() => getProductsByCategory(type || ''), [type, getProductsByCategory]);
   const products = useMemo(() => {
     if (filter === 'all') return rawProducts;
     return rawProducts.filter(p => p.skin.includes(filter.toLowerCase()));
   }, [rawProducts, filter]);
 
-  const meta = CATEGORY_META[id || ''] || { title: "Collection", desc: "Discover our premium formulations.", bg: "from-theme-primary/10 to-transparent" };
+  const meta = CATEGORY_META[type || ''] || { title: "Collection", desc: "Discover our premium formulations.", bg: "from-theme-primary/10 to-transparent" };
 
   const handleAddToCart = (product: any) => {
     addOrder({
