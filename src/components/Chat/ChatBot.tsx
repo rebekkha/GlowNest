@@ -35,7 +35,7 @@ const ChatBot: React.FC = () => {
     try {
       const apiKey = import.meta.env.VITE_GROQ_API_KEY;
       const apiMessages = [
-        { role: 'system', content: 'You are a helpful and polite customer support assistant for GlowNest, a premium skincare and wellness brand. Keep your answers concise, professional, and friendly.' },
+        { role: 'system', content: 'You are a helpful and polite customer support assistant for GlowNest, a premium skincare and wellness brand. You MUST ONLY answer questions related to skincare, wellness, and GlowNest products. If a user asks about programming, math, history, or ANY other unrelated topic, you must politely refuse to answer and redirect them back to skincare and wellness. Keep your answers concise, professional, and friendly.' },
         ...messages.map(m => ({ role: m.role, content: m.content })),
         { role: 'user', content: userMessage }
       ];
@@ -109,9 +109,7 @@ const ChatBot: React.FC = () => {
             {/* Header */}
             <div className="flex items-center justify-between p-4 bg-gradient-to-r from-theme-primary/10 to-theme-secondary/10 border-b border-theme-text/5">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-theme-primary to-theme-secondary flex items-center justify-center text-theme-bg font-bold shadow-md">
-                  GN
-                </div>
+                <img src="/bot-logo.png" alt="GlowNest AI" className="w-10 h-10 rounded-full shadow-md object-cover border border-theme-primary/20" />
                 <div>
                   <h3 className="font-bold text-theme-text m-0">GlowNest AI</h3>
                   <p className="text-xs text-theme-text/60 m-0">Typically replies instantly</p>
